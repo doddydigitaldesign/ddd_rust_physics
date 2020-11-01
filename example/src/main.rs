@@ -1,4 +1,4 @@
-use ddd_rust_physics_2d_new::{
+use physics2d::{
     self,
     containers::{
         entity::Entity, physical::Physical, plane::Plane, shape::EntityShape, shape::Shape,
