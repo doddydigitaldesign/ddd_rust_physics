@@ -1,46 +1,28 @@
-use physics2d::{
-    self,
-    containers::{
-        entity::Entity, physical::Physical, plane::Plane, shape::EntityShape, shape::Shape,
-    },
-    dynamics::{acceleration::Acceleration, velocity::Velocity},
-    shapes::circle::Circle,
-    shapes::rectangle::Rectangle,
-    utils::point::Point,
-};
+pub mod mocks;
+use mocks::{PlayerDeps, PlayerShape};
+use physics2d::{self, containers::plane::Plane};
 
 fn main() {
-    let position1 = Point::new(10.0, 125.0);
-    let velocity1 = Velocity::new(2.0, 1.0, 0.0);
-    let acceleration1 = Acceleration::new(0.1, 0.05, 0.0);
-    let mass1: f64 = 1.0;
-    let physical1 = Physical::from_values(position1, mass1, velocity1, acceleration1);
-
-    let player1_circle = Circle::new(1.0);
-    let player1_entity = Entity::new(
-        Shape {
-            circle: Some(player1_circle),
-            rectangle: None,
-            shape: EntityShape::Circle,
-        },
-        Some(physical1),
-    );
-
-    let position2 = Point::new(910.0, 425.0);
-    let velocity2 = Velocity::new(-2.0, -1.0, 0.0);
-    let acceleration2 = Acceleration::new(0.2, 0.1, 0.0);
-    let mass2: f64 = 0.5;
-    let physical2 = Physical::from_values(position2, mass2, velocity2, acceleration2);
-
-    let player2_rectangle = Rectangle::new(1.0, 0.5);
-    let player2_entity = Entity::new(
-        Shape {
-            circle: None,
-            rectangle: Some(player2_rectangle),
-            shape: EntityShape::Rectangle,
-        },
-        Some(physical2),
-    );
+    let player1_entity = mocks::create_mock_player(PlayerDeps {
+        ax: 0.1,
+        ay: 0.05,
+        shape: PlayerShape::Circle,
+        x: 10.0,
+        y: 125.0,
+        vx: 2.0,
+        vy: 1.0,
+        mass: 1.0,
+    });
+    let player2_entity = mocks::create_mock_player(PlayerDeps {
+        ax: 0.2,
+        ay: 0.1,
+        shape: PlayerShape::Rectangle,
+        x: 910.0,
+        y: 425.0,
+        vx: -2.0,
+        vy: -1.0,
+        mass: 0.5,
+    });
 
     let mut plane = Plane::new(1000.0, 1000.0);
 
