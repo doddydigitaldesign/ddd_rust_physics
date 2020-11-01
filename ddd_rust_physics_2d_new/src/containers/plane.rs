@@ -32,9 +32,13 @@ impl Plane {
 #[cfg(test)]
 mod tests {
     use crate::{
-        containers::shape::{EntityShape, Shape},
+        containers::{
+            physical::Physical,
+            shape::{EntityShape, Shape},
+        },
         dynamics::{acceleration::Acceleration, velocity::Velocity},
         shapes::circle::Circle,
+        utils::point::Point,
     };
 
     use super::Entity;
@@ -49,20 +53,22 @@ mod tests {
 
     #[test]
     fn it_adds_entity() {
-        let circle = Circle::new(
-            0.0,
-            0.0,
-            1.0,
-            Some(0.0),
-            Velocity::new(0.0, 0.0, 0.0),
-            Acceleration::new(0.0, 0.0, 0.0),
-        );
+        let circle = Circle::new(1.0);
         let mut plane = Plane::new(10.0, 10.0);
-        let entity = Entity::new(Shape {
-            shape: EntityShape::Circle,
-            circle: Some(circle),
-            rectangle: None,
-        })
+        let position = Point::new(0.0, 0.0);
+        let velocity = Velocity::new(0.0, 0.0, 0.0);
+        let acceleration = Acceleration::new(0.0, 0.0, 0.0);
+
+        let physical = Physical::from_values(position, 1.0, velocity, acceleration);
+
+        let entity = Entity::new(
+            Shape {
+                shape: EntityShape::Circle,
+                circle: Some(circle),
+                rectangle: None,
+            },
+            Some(physical),
+        )
         .unwrap();
         let circle_id = "circle".to_string();
         plane.add_entity(circle_id, entity);

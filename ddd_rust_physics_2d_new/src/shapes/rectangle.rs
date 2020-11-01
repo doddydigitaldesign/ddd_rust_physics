@@ -3,37 +3,30 @@ use crate::containers::shape::EntityShape;
 #[derive(Copy, Clone, PartialEq, Debug)]
 pub struct Rectangle {
     pub entity_type: EntityShape,
-    x: f64,
-    y: f64,
-    height: f64,
-    width: f64,
-    angle: f64,
+    size_y: f64,
+    size_x: f64,
 }
 
 impl Rectangle {
-    pub fn new(x: f64, y: f64, height: f64, width: f64, angle: Option<f64>) -> Rectangle {
-        let angle_or_default: f64 = match angle {
-            None => 0.0,
-            Some(angle) => angle,
-        };
-
+    pub fn new(size_x: f64, size_y: f64) -> Rectangle {
         Rectangle {
             entity_type: EntityShape::Rectangle,
-            x,
-            y,
-            height,
-            width,
-            angle: angle_or_default,
+            size_y,
+            size_x,
         }
     }
-    pub fn get_position(&self) -> (f64, f64) {
-        (self.x, self.y)
+
+    pub fn get_sizes(&self) -> (f64, f64) {
+        (self.size_x, self.size_y)
     }
-    pub fn get_size(&self) -> (f64, f64) {
-        (self.height, self.width)
+
+    pub fn set_sizes(&mut self, size_x: f64, size_y: f64) {
+        self.size_x = size_x;
+        self.size_y = size_y;
     }
-    pub fn get_angle(&self) -> f64 {
-        self.angle
+
+    pub fn get_area(&self) -> f64 {
+        self.size_x * self.size_y
     }
 }
 
@@ -42,9 +35,11 @@ mod tests {
     #[test]
     fn it_rectangle() {
         use crate::shapes::rectangle::Rectangle;
-        let my_rect = Rectangle::new(10.0, 20.0, 5.0, 7.0, None);
-        assert_eq!(my_rect.get_position(), (10.0, 20.0));
-        assert_eq!(my_rect.get_size(), (5.0, 7.0));
-        assert_eq!(my_rect.get_angle(), 0.0);
+
+        let size_x: f64 = 10.0;
+        let size_y: f64 = 20.0;
+
+        let my_rect = Rectangle::new(size_x, size_y);
+        assert_eq!(my_rect.get_sizes(), (size_x, size_y));
     }
 }

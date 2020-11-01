@@ -1,81 +1,52 @@
-use crate::{
-    containers::shape::EntityShape,
-    dynamics::{acceleration::Acceleration, velocity::Velocity},
-};
+use crate::containers::shape::EntityShape;
+use std::f64::consts::PI;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Circle {
     pub entity_type: EntityShape,
-    x: f64,
-    y: f64,
     radius: f64,
-    angle: f64,
-    velocity: Velocity,
-    acceleration: Acceleration,
 }
 
 impl Circle {
-    pub fn new(
-        x: f64,
-        y: f64,
-        radius: f64,
-        angle: Option<f64>,
-        velocity: Velocity,
-        acceleration: Acceleration,
-    ) -> Circle {
-        let angle_or_default: f64 = match angle {
-            None => 0.0,
-            Some(angle) => angle,
-        };
-
+    pub fn new(radius: f64) -> Circle {
         Circle {
             entity_type: EntityShape::Circle,
-            x,
-            y,
             radius,
-            angle: angle_or_default,
-            velocity,
-            acceleration,
         }
-    }
-    pub fn get_position(&self) -> (f64, f64) {
-        (self.x, self.y)
     }
     pub fn get_radius(&self) -> f64 {
         self.radius
     }
+    pub fn set_radius(&mut self, radius: f64) {
+        self.radius = radius;
+    }
     pub fn get_area(&self) -> f64 {
         let base = self.radius;
-        std::f64::consts::PI * base.powi(2)
-    }
-    pub fn get_angle(&self) -> f64 {
-        self.angle
-    }
-    pub fn get_velocity(&self) -> Velocity {
-        self.velocity
-    }
-    pub fn get_acceleration(&self) -> Acceleration {
-        self.acceleration
+        PI * base.powi(2)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{Acceleration, Velocity};
+    use super::Circle;
+    use std::f64::consts::PI;
     #[test]
-    fn it_circle() {
-        use crate::shapes::circle::Circle;
-        let velocity = Velocity::new(5.0, 5.0, 0.0);
-
-        let acceleration = Acceleration::new(0.0, 0.0, 0.0);
-
-        let my_circle = Circle::new(10.0, 20.0, 5.9, None, velocity, acceleration);
-
+    fn it_gets_radius_and_area() {
         let radius: f64 = 5.9;
+        let my_circle = Circle::new(radius);
 
-        assert_eq!(my_circle.get_position(), (10.0, 20.0));
-        assert_eq!(my_circle.get_radius(), 5.9);
-        assert_eq!(my_circle.get_area(), std::f64::consts::PI * radius.powi(2));
-        assert_eq!(my_circle.get_angle(), 0.0);
+        assert_eq!(my_circle.get_radius(), radius);
+        assert_eq!(my_circle.get_area(), PI * radius.powi(2));
+    }
+    #[test]
+    fn it_sets_radius() {
+        let radius: f64 = 5.9;
+        let mut my_circle = Circle::new(radius);
+
+        let new_radius: f64 = 10.0;
+        my_circle.set_radius(10.0);
+
+        assert_eq!(my_circle.get_radius(), new_radius);
+        assert_eq!(my_circle.get_area(), PI * new_radius.powi(2));
     }
 }

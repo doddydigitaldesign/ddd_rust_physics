@@ -1,4 +1,4 @@
-use crate::shapes::circle::Circle;
+use crate::containers::entity::Entity;
 use crate::utils::point::Point;
 
 #[derive(Debug, PartialEq, Clone)]
@@ -13,11 +13,15 @@ pub struct Intersection {
     pub result: Option<(Point, Point)>,
 }
 
-pub fn circle_intersection(c0: Circle, c1: Circle) -> Intersection {
-    let (c0x, c0y) = c0.get_position();
-    let (c1x, c1y) = c1.get_position();
-    let r0 = c0.get_radius();
-    let r1 = c1.get_radius();
+pub fn circle_intersection(c0: Entity, c1: Entity) -> Intersection {
+    let r0 = c0.entity.circle.unwrap().get_radius();
+    let r1 = c1.entity.circle.unwrap().get_radius();
+
+    let c0_position = c0.physical.get_position();
+    let c1_position = c1.physical.get_position();
+
+    let (c0x, c0y) = c0_position.get_tuple();
+    let (c1x, c1y) = c1_position.get_tuple();
 
     // x,y-distances between centers
     let dx = c1x - c0x;
