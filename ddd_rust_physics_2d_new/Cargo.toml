@@ -1,5 +1,5 @@
 [package]
-name = "ddd_rust_physics_2d"
+name = "ddd_rust_physics_2d_new"
 version = "0.1.0"
 authors = ["Daniel Sonne Lehnberg <doddy@doddy.se>"]
 edition = "2018"

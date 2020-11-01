@@ -1,6 +1,6 @@
 [workspace]
 
 members = [
-    "ddd_rust_physics_2d",
+    "ddd_rust_physics_2d_new",
     "ddd_rust_physics_example"
 ]

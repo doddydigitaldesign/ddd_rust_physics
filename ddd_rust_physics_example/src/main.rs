@@ -1,4 +1,4 @@
-use ddd_rust_physics_2d::{
+use ddd_rust_physics_2d_new::{
     self,
     dynamics::{acceleration::Acceleration, velocity::Velocity},
 };
@@ -6,7 +6,7 @@ use ddd_rust_physics_2d::{
 fn main() {
     let velocity = Velocity::new(0.0, 0.0, 0.0);
     let acceleration = Acceleration::new(0.0, 0.0, 0.0);
-    let circle = ddd_rust_physics_2d::shapes::circle::Circle::new(
+    let circle = ddd_rust_physics_2d_new::shapes::circle::Circle::new(
         0.0,
         0.0,
         1.0,
