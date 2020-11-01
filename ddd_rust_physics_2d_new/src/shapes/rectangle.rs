@@ -1,4 +1,8 @@
+use crate::containers::shape::EntityShape;
+
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub struct Rectangle {
+    pub entity_type: EntityShape,
     x: f64,
     y: f64,
     height: f64,
@@ -7,18 +11,19 @@ pub struct Rectangle {
 }
 
 impl Rectangle {
-    pub fn new (x: f64, y: f64, height: f64, width: f64, angle: Option<f64>) -> Rectangle {
+    pub fn new(x: f64, y: f64, height: f64, width: f64, angle: Option<f64>) -> Rectangle {
         let angle_or_default: f64 = match angle {
             None => 0.0,
             Some(angle) => angle,
         };
 
         Rectangle {
+            entity_type: EntityShape::Rectangle,
             x,
             y,
             height,
             width,
-            angle: angle_or_default
+            angle: angle_or_default,
         }
     }
     pub fn get_position(&self) -> (f64, f64) {
@@ -31,7 +36,6 @@ impl Rectangle {
         self.angle
     }
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -1,6 +1,11 @@
-use crate::dynamics::{acceleration::Acceleration, velocity::Velocity};
+use crate::{
+    containers::shape::EntityShape,
+    dynamics::{acceleration::Acceleration, velocity::Velocity},
+};
+
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Circle {
+    pub entity_type: EntityShape,
     x: f64,
     y: f64,
     radius: f64,
@@ -24,6 +29,7 @@ impl Circle {
         };
 
         Circle {
+            entity_type: EntityShape::Circle,
             x,
             y,
             radius,
@@ -64,7 +70,7 @@ mod tests {
         let acceleration = Acceleration::new(0.0, 0.0, 0.0);
 
         let my_circle = Circle::new(10.0, 20.0, 5.9, None, velocity, acceleration);
-    
+
         let radius: f64 = 5.9;
 
         assert_eq!(my_circle.get_position(), (10.0, 20.0));
